@@ -18,13 +18,14 @@
     <link rel="icon" type="image/x-icon" href="/logo.png">
 
 
+    <meta property="og:image" content="/banner.png">
     {{-- <meta property="og:site_name" content="Loom">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.loom.com">
     <meta property="og:title" content="PlayBook365 - 13 June 2024">
     <meta property="og:description"
         content="Use Loom to record quick videos of your screen and cam. Explain anything clearly and easily – and skip the meeting. An essential tool for hybrid workplaces." />
-    <meta property="og:image" content="https://cdn.loom.com/assets/img/og/loom-banner.png">
+
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="600">
     <meta name="twitter:card" content="summary_large_image" /> --}}
