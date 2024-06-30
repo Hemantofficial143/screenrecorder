@@ -74,24 +74,38 @@ defineProps({
                     </div>
                 </div>
                 <div class="container px-5 py-0 mx-auto">
-                    <div class="grid grid-cols-4 gap-4">
-                        <div v-for="recording in list">
-                            <div class="bg-gray-100 p-6 rounded-lg"
-                                :class="{ 'border border-red-500': recording.latest != undefined }">
-                                <span style="position: absolute;" v-if="recording.latest != undefined"
-                                    class="bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">LATEST</span>
-                                <video :poster="recording.thumb_path" :src="recording.link" controls
-                                    class="h-40 rounded w-full object-cover object-center mb-6"></video>
-                                <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                                    {{ recording.days_passed }}</h3>
-                                <h2 class="text-lg text-gray-900 font-medium title-font mb-4">{{ recording.name
-                                    }}</h2>
-                                <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit
-                                    waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+
+                    <section class="text-gray-600 body-font">
+                        <div class="container px-5 py-24 mx-auto">
+                            <div class="flex flex-wrap -m-4">
+                                <div class="lg:w-1/4 md:w-1/2 p-4 w-full" v-for="recording in list">
+                                    <a :href="route('view-recording', { 'recording_id': recording.recording_id })">
+                                        <div class="bg-gray-100 p-6 rounded-lg block bg-white border border-gray-200">
+                                            <a class="block relative h-48 rounded overflow-hidden">
+                                                <span style="position: absolute;" v-if="recording.latest != undefined"
+                                                    class=" bg-red-500 text-white text-uppercase text-xs px-2.5
+                                                py-0.5">LATEST</span>
+                                                <span
+                                                    style="position: absolute;bottom:5px;right:5px;background-color: black;"
+                                                    class="rounded-full bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">4
+                                                    mins</span>
+                                                <img alt="ecommerce"
+                                                    class="object-cover object-center w-full h-full block"
+                                                    :src="recording.thumb_path">
+                                            </a>
+                                            <div class="mt-4">
+                                                <h3
+                                                    class="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                                                    {{ recording.days_passed }}</h3>
+                                                <h2 class="text-gray-900 title-font text-lg font-medium">File Name </h2>
+                                                <!-- <p class="mt-1">$16.00</p> -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-
-                    </div>
+                    </section>
                 </div>
             </section>
         </div>
