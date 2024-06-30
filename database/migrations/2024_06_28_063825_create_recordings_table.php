@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('thumb');
             $table->string('extension');
             $table->integer('size');
+            $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();
 

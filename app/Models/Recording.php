@@ -20,7 +20,7 @@ class Recording extends Model
 
     protected $primaryKey = 'recording_id';
 
-    protected $appends = ['link','days_passed','thumb_path'];
+    protected $appends = ['link','days_passed','thumb_path','duration_text'];
     protected $helper;
 
     public function __construct(){
@@ -34,6 +34,11 @@ class Recording extends Model
     }
     public function getThumbPathAttribute(){
         return Storage::disk('thumbs')->url($this->thumb);
+    }
+
+
+    public function getDurationTextAttribute(){
+        return $this->helper->formatDuration($this->duration);
     }
 
 
@@ -59,6 +64,7 @@ class Recording extends Model
         $recording->thumb = $data['thumb'];
         $recording->extension = $data['extension'];
         $recording->size = $data['size'];
+        $recording->duration = $data['duration'];
         $recording->save();
         return $recording;
     }

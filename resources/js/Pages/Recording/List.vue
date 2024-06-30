@@ -78,30 +78,36 @@ defineProps({
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 py-24 mx-auto">
                             <div class="flex flex-wrap -m-4">
-                                <div class="lg:w-1/4 md:w-1/2 p-4 w-full" v-for="recording in list">
-                                    <a :href="route('view-recording', { 'recording_id': recording.recording_id })">
-                                        <div class="bg-gray-100 p-6 rounded-lg block bg-white border border-gray-200">
-                                            <a class="block relative h-48 rounded overflow-hidden">
-                                                <span style="position: absolute;" v-if="recording.latest != undefined"
-                                                    class=" bg-red-500 text-white text-uppercase text-xs px-2.5
+                                <div class="lg:w-1/4 md:w-1/2 p-4 w-full" v-for="(recording, idx) in list">
+
+                                    <div class="bg-gray-100 p-6 rounded-lg block bg-white border border-gray-200">
+                                        <a class="block relative h-48 rounded overflow-hidden">
+                                            <span style="position: absolute;" v-if="recording.latest != undefined"
+                                                class=" bg-red-500 text-white text-uppercase text-xs px-2.5
                                                 py-0.5">LATEST</span>
-                                                <span
-                                                    style="position: absolute;bottom:5px;right:5px;background-color: black;"
-                                                    class="rounded-full bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">4
-                                                    mins</span>
-                                                <img alt="ecommerce"
-                                                    class="object-cover object-center w-full h-full block"
-                                                    :src="recording.thumb_path">
-                                            </a>
-                                            <div class="mt-4">
-                                                <h3
-                                                    class="tracking-widest text-indigo-500 text-xs font-medium title-font">
-                                                    {{ recording.days_passed }}</h3>
-                                                <h2 class="text-gray-900 title-font text-lg font-medium">File Name </h2>
-                                                <!-- <p class="mt-1">$16.00</p> -->
-                                            </div>
+                                            <span
+                                                style="position: absolute;bottom:5px;right:5px;background-color: black;"
+                                                class="rounded-full bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">{{
+                                                    recording.duration_text }}</span>
+                                            <video :src="recording.link" v-if="recording.playHere != undefined"
+                                                controls></video>
+                                            <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                                                v-if="recording.playHere == undefined" :src="recording.thumb_path">
+                                        </a>
+                                        <div class="mt-4">
+                                            <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">
+                                                {{ recording.days_passed }}
+
+                                                <span @click="(e) => playHere(e, idx)" class=" bg-red-500 text-white text-uppercase text-xs px-2.5
+                                                    cursor-pointer
+                                                py-0.5">Play Here</span>
+
+                                            </h3>
+                                            <h2 class="text-gray-900 title-font text-lg font-medium">File Name </h2>
+                                            <!-- <p class="mt-1">$16.00</p> -->
                                         </div>
-                                    </a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -157,6 +163,14 @@ export default {
         }
     },
     methods: {
+        playHere(event, index) {
+            this.list.forEach((recording, idx) => {
+                if (recording['playHere'] != undefined) {
+                    delete recording['playHere'];
+                }
+            });
+            this.list[index].playHere = true;
+        },
         async uploadRecording(recording, blob) {
             const formData = new FormData();
             formData.append('recording', recording);

@@ -4,6 +4,8 @@ namespace App\Services;
 use Illuminate\Support\Str;
 use App\Helpers\BaseHelper;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class VideoService{
 
@@ -40,6 +42,17 @@ class VideoService{
         }catch (\Exception $e){
             return "";
         }
+    }
+
+    public function getVideoLength($filePath)
+    {
+        $process = new Process(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', $filePath]);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+        $duration = (int) round($process->getOutput());
+        return $duration;
     }
 
 

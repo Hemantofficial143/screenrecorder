@@ -37,11 +37,12 @@ class RecordingController extends Controller
             $file = $request->file('recording');
             $fileName = $this->videoService->convertAndSaveVideo($file,'recordings');
             $thumb = $this->videoService->saveVideoThumb($fileName,'thumbs','recordings');
-
+            $durationInSeconds = $this->videoService->getVideoLength($this->helper->getFilePath('recordings',$fileName));
             $recording = $this->modelObject->saveRecord([
                 'blob_url' => $request->blob_url,
                 'name'  => $fileName,
                 'thumb' => $thumb,
+                'duration' => $durationInSeconds,
                 'extension' => '',
                 'size' => 1,
             ]);
