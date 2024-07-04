@@ -1,37 +1,43 @@
 <template>
+    <GuestLayout>
 
-    <Head :title="recording.name" />
-    <GuestLayout size="dd">
-        <div style="width: 80%;height: 50%;">
-            <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
-                <Video :poster="recording.link">
-                    <source :data-src="recording.link" type="video/mp4" />
-                </Video>
-                <DefaultUi>
-                    <TapSidesToSeek />
-                </DefaultUi>
-            </Player>
-        </div>
+        <Head :title="recording.name" />
+        <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
+            <Video :poster="recording.link">
+                <source :data-src="recording.link" type="video/mp4" />
+            </Video>
+            <DefaultUi>
+                <TapSidesToSeek />
+            </DefaultUi>
+        </Player>
     </GuestLayout>
 </template>
 
 <script lang="ts">
-import { defineComponent, defineProps, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { Player, Video, DefaultUi } from '@vime/vue-next';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head } from '@inertiajs/vue3';
+
+// Default theme.
 import '@vime/core/themes/default.css';
+
+// Optional light theme (extends default).
+// import '@vime/core/themes/light.css';
+
+// Custom UI Component.
 import TapSidesToSeek from './TapSidesToSeek.vue';
 
 export default defineComponent({
     name: 'App',
     components: {
-        GuestLayout,
-        Head,
         Player,
         Video,
         DefaultUi,
         TapSidesToSeek,
+        GuestLayout,
+        Head
+
     },
     props: {
         recording: {
@@ -46,7 +52,7 @@ export default defineComponent({
     },
     methods: {
         onPlaybackReady() {
-
+            // ...
         },
     },
 });
