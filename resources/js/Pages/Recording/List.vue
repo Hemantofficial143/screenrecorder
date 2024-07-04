@@ -89,22 +89,14 @@ defineProps({
                                                 style="position: absolute;bottom:5px;right:5px;background-color: black;"
                                                 class="rounded-full bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">{{
                                                     recording.duration_text }}</span>
-                                            <video :src="recording.link" v-if="recording.playHere != undefined"
-                                                controls></video>
                                             <img alt="ecommerce" class="object-cover object-center w-full h-full block"
-                                                v-if="recording.playHere == undefined" :src="recording.thumb_path">
+                                                :src="recording.thumb_path">
                                         </a>
                                         <div class="mt-4">
                                             <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">
                                                 {{ recording.days_passed }}
-
-                                                <span @click="(e) => playHere(e, idx)" class=" bg-red-500 text-white text-uppercase text-xs px-2.5
-                                                    cursor-pointer
-                                                py-0.5">Play Here</span>
-
                                             </h3>
                                             <h2 class="text-gray-900 title-font text-lg font-medium">File Name </h2>
-                                            <!-- <p class="mt-1">$16.00</p> -->
                                         </div>
                                     </div>
 
@@ -134,6 +126,7 @@ export default {
             videoUploadProgress: 0,
             videoUploadInProgress: false,
             recordButton: {
+                title: '',
                 micId: '',
                 disabled: false,
                 inProgress: false,
@@ -163,14 +156,6 @@ export default {
         }
     },
     methods: {
-        playHere(event, index) {
-            this.list.forEach((recording, idx) => {
-                if (recording['playHere'] != undefined) {
-                    delete recording['playHere'];
-                }
-            });
-            this.list[index].playHere = true;
-        },
         async uploadRecording(recording, blob) {
             const formData = new FormData();
             formData.append('recording', recording);
@@ -186,6 +171,7 @@ export default {
                     recordingData['latest'] = true;
                     this.list.unshift(recordingData);
                     this.setMessage('success', 'Your video was successfully saved. You can download from below grid.');
+                    window.open(route('view-recording', { recording_id: recordingData.recording_id }), '_blank')
                 }
             } else {
                 this.setMessage('error', 'Somehow your video was failed to save although you can download from below grid first one is your recording');
@@ -196,6 +182,7 @@ export default {
             mediaRecorder.stop();
         },
         async startRecording() {
+
             let composedStream = new MediaStream();
 
 
