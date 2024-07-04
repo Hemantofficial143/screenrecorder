@@ -1,51 +1,69 @@
-<script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { Player, Video, DefaultUi } from '@vime/vue-next';
-import '@vime/core/themes/default.css';
-import { computed, onMounted, ref, watch } from 'vue';
-import TapSidesToSeek from '../Recording/TapSidesToSeek.vue';
-
-
-const props = defineProps({
-    recording: {
-        type: Object,
-        default: null
-    }
-});
-
-const videoLink = ref('')
-
-const setVideoLink = async () => {
-    videoLink.value = props.recording.link;
-    return false;
-    const response = await fetch(props.recording.link);
-    const videoBlob = await response.blob();
-    const blobUrl = URL.createObjectURL(videoBlob);
-    videoLink.value = blobUrl
-}
-const onPlaybackReady = () => {
-
-}
-
-onMounted(() => {
-    setVideoLink()
-})
-
-</script>
 <template>
-
-    <Head :title="recording.name" />
-    <GuestLayout size="dd">
-        <div style="width: 80%;height: 50%;">
-            <Player playsinline ref="player" vPlaybackReady="onPlaybackReady">
-                <Video :poster="videoLink">
-                    <source :data-src="videoLink" />
+    <div id="app">
+        <div id="container">
+            <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
+                <Video>
+                    <source :data-src="recording.link" />
                 </Video>
+
                 <DefaultUi>
                     <TapSidesToSeek />
                 </DefaultUi>
             </Player>
         </div>
-    </GuestLayout>
+    </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import { Player, Video, DefaultUi } from '@vime/vue-next';
+
+// Default theme.
+import '@vime/core/themes/default.css';
+
+// Optional light theme (extends default).
+// import '@vime/core/themes/light.css';
+
+// Custom UI Component.
+import TapSidesToSeek from './TapSidesToSeek.vue';
+
+export default defineComponent({
+    name: 'App',
+    components: {
+        Player,
+        Video,
+        DefaultUi,
+        TapSidesToSeek,
+    },
+    props: {
+        recording: {
+
+        }
+    },
+    setup() {
+        // Obtain a ref if you need to call any methods.
+        const player = ref<HTMLVmPlayerElement | null>(null);
+        return { player };
+    },
+    methods: {
+        onPlaybackReady() {
+            // ...
+        },
+    },
+});
+</script>
+
+<style>
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    width: 100%;
+    max-width: 960px;
+}
+</style>
