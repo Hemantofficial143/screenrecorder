@@ -1,40 +1,43 @@
 <template>
-    <div id="app">
-        <div id="container">
-            <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
-                <Video poster="https://media.vimejs.com/poster.png">
-                    <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
-                </Video>
 
+    <Head :title="recording.name" />
+    <GuestLayout size="dd">
+        <div style="width: 80%;height: 50%;">
+            <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
+                <Video :poster="recording.link">
+                    <source :data-src="recording.link" type="video/mp4" />
+                </Video>
                 <DefaultUi>
-                    <!-- Custom UI component. -->
                     <TapSidesToSeek />
                 </DefaultUi>
             </Player>
         </div>
-    </div>
+    </GuestLayout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, defineProps, ref } from 'vue';
 import { Player, Video, DefaultUi } from '@vime/vue-next';
-
-// Default theme.
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { Head } from '@inertiajs/vue3';
 import '@vime/core/themes/default.css';
-
-// Optional light theme (extends default).
-// import '@vime/core/themes/light.css';
-
-// Custom UI Component.
 import TapSidesToSeek from './TapSidesToSeek.vue';
 
 export default defineComponent({
     name: 'App',
     components: {
+        GuestLayout,
+        Head,
         Player,
         Video,
         DefaultUi,
         TapSidesToSeek,
+    },
+    props: {
+        recording: {
+            type: Object,
+            default: null
+        }
     },
     setup() {
         // Obtain a ref if you need to call any methods.
@@ -43,23 +46,8 @@ export default defineComponent({
     },
     methods: {
         onPlaybackReady() {
-            // ...
+
         },
     },
 });
 </script>
-
-<style>
-#app {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#container {
-    width: 100%;
-    max-width: 960px;
-}
-</style>
