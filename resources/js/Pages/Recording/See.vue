@@ -17,11 +17,14 @@ const videoLink = ref('')
 
 const setVideoLink = async () => {
     videoLink.value = props.recording.link;
-    return;
+    return false;
     const response = await fetch(props.recording.link);
     const videoBlob = await response.blob();
     const blobUrl = URL.createObjectURL(videoBlob);
     videoLink.value = blobUrl
+}
+const onPlaybackReady = () => {
+
 }
 
 onMounted(() => {
@@ -34,7 +37,7 @@ onMounted(() => {
     <Head :title="recording.name" />
     <GuestLayout size="dd">
         <div style="width: 80%;height: 50%;">
-            <Player playsinline ref="player" v-if="videoLink">
+            <Player playsinline ref="player" v-if="videoLink" @vPlaybackReady="onPlaybackReady">
                 <Video :poster="videoLink">
                     <source :data-src="videoLink" />
                 </Video>
