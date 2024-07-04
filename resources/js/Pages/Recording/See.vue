@@ -1,11 +1,12 @@
 <template>
     <div id="app">
         <div id="container">
+            <template v-if="recording != null">
+            </template>
             <Player playsinline ref="player" @vPlaybackReady="onPlaybackReady">
                 <Video>
                     <source :data-src="recording.link" />
                 </Video>
-
                 <DefaultUi>
                     <TapSidesToSeek />
                 </DefaultUi>
@@ -37,7 +38,7 @@ export default defineComponent({
     },
     props: {
         recording: {
-
+            default: null
         }
     },
     setup() {
