@@ -46,6 +46,7 @@ class VideoService{
 
     public function getVideoLength($filePath)
     {
+        return 0;
         $process = new Process(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', $filePath]);
         $process->run();
         if (!$process->isSuccessful()) {
