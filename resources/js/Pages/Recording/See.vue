@@ -16,6 +16,8 @@ const props = defineProps({
 const videoLink = ref('')
 
 const setVideoLink = async () => {
+    videoLink.value = props.recording.link;
+    return;
     const response = await fetch(props.recording.link);
     const videoBlob = await response.blob();
     const blobUrl = URL.createObjectURL(videoBlob);
