@@ -4,6 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { Player, Video, DefaultUi } from '@vime/vue-next';
 import '@vime/core/themes/default.css';
 import { computed, onMounted, ref, watch } from 'vue';
+import TapSidesToSeek from '../Recording/TapSidesToSeek.vue';
 
 
 const props = defineProps({
