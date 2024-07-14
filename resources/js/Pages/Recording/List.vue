@@ -81,7 +81,7 @@ defineProps({
                                 <div class="lg:w-1/4 md:w-1/2 p-4 w-full" v-for="(recording, idx) in list">
 
                                     <div class="bg-gray-100 p-6 rounded-lg block bg-white border border-gray-200">
-                                        <a class="block relative h-48 rounded overflow-hidden">
+                                        <a :href="route('view-recording', { recording_id: recording.recording_id })" target="_blank" class="block relative h-48 rounded overflow-hidden">
                                             <span style="position: absolute;" v-if="recording.latest != undefined"
                                                 class=" bg-red-500 text-white text-uppercase text-xs px-2.5
                                                 py-0.5">LATEST</span>
@@ -89,14 +89,16 @@ defineProps({
                                                 style="position: absolute;bottom:5px;right:5px;background-color: black;"
                                                 class="rounded-full bg-red-500 text-white text-uppercase text-xs px-2.5 py-0.5">{{
                                                     recording.duration_text }}</span>
-                                            <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                                            <img alt="THUMBNAIL NOT FOUND" class="object-cover object-center w-full h-full block"
                                                 :src="recording.thumb_path">
                                         </a>
                                         <div class="mt-4">
                                             <h3 class="tracking-widest text-indigo-500 text-xs font-medium title-font">
                                                 {{ recording.days_passed }}
                                             </h3>
-                                            <h2 class="text-gray-900 title-font text-lg font-medium">File Name </h2>
+                                            <div style="display: -webkit-box;max-width: 400px;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
+                                                <span class="text-gray-900 title-font text-lg font-medium">{{recording.name}}  </span>
+                                            </div>
                                         </div>
                                     </div>
 
