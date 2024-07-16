@@ -23,6 +23,11 @@
         "@vime/vue-next": "^5.4.1",
         "vue-toast-notification": "^3.1.2",
         "vue-toastification": "^2.0.0-rc.5",
-        "vue-vimeo-player": "^1.1.2"
+        "vue-vimeo-player": "^1.1.2",
+        "@sentry/browser": "^5.22.3",
+        "core-js": "^3.6.5",
+        "custom-event-polyfill": "^1.0.7",
+        "shr-buttons": "2.0.3",
+        "url-polyfill": "^1.1.10"
     }
 }
