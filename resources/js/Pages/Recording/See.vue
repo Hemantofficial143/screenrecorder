@@ -1,56 +1,26 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { Player, Video, DefaultUi } from '@vime/vue-next';
-import '@vime/core/themes/default.css';
-import { computed, onMounted, ref, watch } from 'vue';
-import TapSidesToSeek from '../Recording/TapSidesToSeek.vue';
-
-
-const props = defineProps({
-    recording: {
-        type: Object,
-        default: null
-    }
-});
-
-const displayPlayer = ref(false)
-const videoLink = ref('')
-
-const setVideoLink = async () => {
-    const response = await fetch(props.recording.link);
-    const videoBlob = await response.blob();
-    const blobUrl = URL.createObjectURL(videoBlob);
-    videoLink.value = blobUrl
-    setTimeout(() => {
-        displayPlayer.value = true
-    }, 1000)
-}
-const onPlaybackReady = () => {
-
-}
-
-onMounted(() => {
-    setVideoLink()
-})
-
 </script>
 <template>
-
     <Head :title="recording.name" />
     <GuestLayout size="dd">
         <div style="width: 80%;height: 50%;">
-            <Player playsinline ref="player" v-if="displayPlayer" @vPlaybackReady="onPlaybackReady">
-                <Video :poster="videoLink">
-                    <source :data-src="videoLink" />
-                </Video>
-                <DefaultUi>
-                    <TapSidesToSeek />
-                </DefaultUi>
-            </Player>
-            <template v-else>
-                Loading Video ....
-            </template>
+            <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
+                <source :src="recording.link" type="video/mp4" />
+            </video>
         </div>
     </GuestLayout>
 </template>
+<script>
+export default {
+    props :{
+        recording : {
+            default : null
+        }
+    },
+    mounted(){
+        const player = new Plyr('#player');
+    }
+}
+</script>
