@@ -18,7 +18,23 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+
+
+        $google2fa = app('pragmarx.google2fa');
+        $secretKey = $google2fa->generateSecretKey();
+
+        $request->session('authenticator_secret_key',$secretKey);
+        $QR_Image = $google2fa->getQRCodeInline(
+            config('app.name'),
+            Auth::user()->email,
+            $secretKey
+        );
+
         return Inertia::render('Profile/Edit', [
+            'authenticator' => [
+                'secret_key' => $secretKey,
+                'qr_code' => $QR_Image
+            ],
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);
