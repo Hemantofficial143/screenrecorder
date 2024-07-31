@@ -112,13 +112,12 @@ defineProps({
     </AuthenticatedLayout>
 </template>
 <script>
-import mixin from '../../Components/mixin.js'
+
 let mediaRecorder;
 let audioStream = null;
 let screenStream = null;
 
 export default {
-    mixins: [mixin],
     data() {
         return {
             message: {

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\RecordingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthenticatorDeviceController;
 use Inertia\Inertia;
 
 /*
@@ -26,16 +28,25 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::get('/view-recording/{recording_id}', [RecordingController::class, 'view'])->name('view-recording');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/2fa-verify', [AuthenticatorDeviceController::class, 'Verify2FACode'])->name('2fa-verify');
+    Route::post('/2fa-verify-submit', [AuthenticatorDeviceController::class, 'Verify2FACodeSubmit'])->name('2fa-verify-submit');
+});
+
+Route::middleware(['auth','2fa'])->group(function () {
+    Route::get('/dashboard', function () { return Inertia::render('Dashboard'); })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::post('/get2fa', [AuthenticatorDeviceController::class, 'get2FACode'])->name('profile.get2fa');
+    Route::post('/set2fa', [AuthenticatorDeviceController::class, 'set2FA'])->name('profile.set2fa');
+
 
 
     Route::get('/recordings', [RecordingController::class, 'index'])->name('recordings');

@@ -1,8 +1,7 @@
-console.log(window.stream,'window.stream');
-export default {
-    data() {
-        return {
-            text : 'Hello Vue.js!'
-        }
-    }
+export const error = (message) => {
+    ElNotification({
+        title: 'Error',
+        message: message,
+        type: 'error',
+    })
 }

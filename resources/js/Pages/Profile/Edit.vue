@@ -12,9 +12,6 @@ defineProps({
     },
     status: {
         type: String,
-    },
-    authenticator : {
-        type : Object
     }
 });
 </script>
@@ -38,7 +35,7 @@ defineProps({
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <Authenticator :authenticator="authenticator" class="max-w-xl" />
+                    <Authenticator class="max-w-xl" />
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

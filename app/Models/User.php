@@ -48,4 +48,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function updateRecord($user_id,$data){
+        $response = ['success' => false];
+        $user = $this->find($user_id);
+        if($user){
+            foreach($data as $field => $value){
+                $user->{$field} = $value;
+            }
+            $user->save();
+            $response['success'] = true;
+            $response['data'] = $user;
+        }
+        return $response;
+    }
+
 }
