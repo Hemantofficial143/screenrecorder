@@ -18,7 +18,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+
+        $devicesEnrolledObject = new \App\Models\AuthenticatorDevice;
+        $enrolledDevices = $devicesEnrolledObject->getDevicesByUser($request->user()->user_id,true);
+
         return Inertia::render('Profile/Edit', [
+            'authenticator_device_count' => $enrolledDevices,
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

@@ -12,6 +12,9 @@ defineProps({
     },
     status: {
         type: String,
+    },
+    authenticator_device_count:{
+        type: Number,
     }
 });
 </script>
@@ -35,7 +38,7 @@ defineProps({
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <Authenticator class="max-w-xl" />
+                    <Authenticator :authenticator_device_count="authenticator_device_count" class="max-w-xl" />
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

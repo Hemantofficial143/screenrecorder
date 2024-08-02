@@ -6,6 +6,10 @@ import { reactive,ref } from 'vue';
 import { error } from '@/Components/mixin.js';
 import axios from 'axios';
 
+defineProps({
+    authenticator_device_count : {default : 0}
+})
+
 const authenticatorForm = useForm({
     enable: false,
     qr_code : '',
@@ -70,6 +74,7 @@ const getAuthCode = async () => {
     <section>
         <header>
             <h2 class="text-lg font-medium text-gray-900">2-Step Verification</h2>
+            <small>{{authenticator_device_count}} Device(s) Enrolled</small>
         </header>
 
         <form  class="mt-6 space-y-6">

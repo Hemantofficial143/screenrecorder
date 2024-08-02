@@ -55,8 +55,7 @@ class AuthenticatorDeviceController extends Controller
     public function Verify2FACodeSubmit(Request $request){
         $authUser = Auth::user();
         $valid = false;
-        $devicesEnrolledObject = new \App\Models\AuthenticatorDevice;
-        $enrolledDevices = $devicesEnrolledObject->getDevicesByUser($authUser->user_id);
+        $enrolledDevices = $this->modelObject->getDevicesByUser($authUser->user_id);
         foreach($enrolledDevices as $device){
             $verified = Google2FA::verifyKey($device->google2fa_secret, $request->one_time_password);
             if($verified){
