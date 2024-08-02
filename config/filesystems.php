@@ -28,6 +28,7 @@ return [
     */
 
 
+
     'disks' => [
 
         'local' => [
@@ -45,15 +46,15 @@ return [
         ],
         'recordings' => [
             'driver' => 'local',
-            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'recordings'),
-            'url' => env('APP_URL').DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'recordings',
+            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'recordings'.DIRECTORY_SEPARATOR),
+            'url' => env('APP_URL').DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'recordings'.DIRECTORY_SEPARATOR,
             'visibility' => 'public',
             'throw' => false,
         ],
         'thumbs' => [
             'driver' => 'local',
-            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'thumbs'),
-            'url' => env('APP_URL').DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'thumbs',
+            'root' => storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR),
+            'url' => env('APP_URL').DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'thumbs'.DIRECTORY_SEPARATOR,
             'visibility' => 'public',
             'throw' => false,
         ],

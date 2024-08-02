@@ -15,48 +15,49 @@
         allowtransparency="true"
         frameborder="0">
     </iframe>
-
-    <script>
-        var playerIframe = document.getElementById('player_iframe');
-
-
-
-
-        function playerInit() {
-            sendMessage('init', {
-                customUrl: @json($recording->link),
-                colorBase: '#250864',
-                colorText: '#ffffff',
-                colorHover: '#7f54f8',
-                threeColorsMode: true,
-                playButton: true,
-                playButtonStyle: 'pulsing'
-            });
-        }
-
-        function onMessage(event) {
-            if(event.source !== playerIframe.contentWindow) {
-                return;
-            }
-
-            var key = event.message ? 'message' : 'data';
-            var details = event[key];
-            var message = details.message;
-
-            if(message === 'init') {
-                playerInit();
-            }
-        }
-
-        function sendMessage(message, data) {
-            playerIframe.contentWindow.postMessage({
-                message: message,
-                data: data
-            }, '*');
-        }
-
-        playerInit();
-
-        window.addEventListener('message', onMessage, false);
-    </script>
   </body>
+  <script>
+
+    var playerIframe = document.getElementById('player_iframe');
+
+    let url = @json($recording->link);
+
+
+    function playerInit() {
+        sendMessage('init', {
+            customUrl: url,
+            customPoster: url,
+            colorBase: '#250864',
+            colorText: '#ffffff',
+            colorHover: '#7f54f8',
+            threeColorsMode: true,
+            playButton: true,
+            playButtonStyle: 'pulsing'
+        });
+    }
+
+    function onMessage(event) {
+        if(event.source !== playerIframe.contentWindow) {
+            return;
+        }
+
+        var key = event.message ? 'message' : 'data';
+        var details = event[key];
+        var message = details.message;
+
+        if(message === 'init') {
+            playerInit();
+        }
+    }
+
+    function sendMessage(message, data) {
+        playerIframe.contentWindow.postMessage({
+            message: message,
+            data: data
+        }, '*');
+    }
+
+    playerInit();
+
+    window.addEventListener('message', onMessage, false);
+</script>

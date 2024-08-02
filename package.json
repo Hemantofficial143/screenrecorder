@@ -26,6 +26,7 @@
         "@vime/vue-next": "^5.4.1",
         "core-js": "^3.6.5",
         "custom-event-polyfill": "^1.0.7",
+        "dplayer": "^1.27.1",
         "element-plus": "^2.7.8",
         "loadjs": "^4.3.0",
         "rangetouch": "^2.0.1",
