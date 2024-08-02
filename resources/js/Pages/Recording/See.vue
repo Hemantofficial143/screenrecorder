@@ -18,11 +18,9 @@ export default {
         return {
             showVideoPlayer: false,
             videoOptions: {
-                autoplay: true,
+                autoplay: false,
                 controls: true,
-                sources: [
-
-                ]
+                sources: []
             }
         }
     },
@@ -30,7 +28,10 @@ export default {
         this.videoOptions.sources.push({
             src : this.recording.link
         })
-        this.showVideoPlayer = true
+        setTimeout(() =>{
+            this.showVideoPlayer = true
+        },1000)
+
     }
 }
 </script>
