@@ -1,7 +1,6 @@
 <template>
     <AuthenticatedLayout>
-        <VideoPlayer :options="videoOptions"></VideoPlayer>
-
+        <VideoPlayer  v-if="showVideoPlayer" :options="videoOptions"></VideoPlayer>
     </AuthenticatedLayout>
 </template>
 <script>
@@ -17,16 +16,21 @@ export default {
     props : ['recording'],
     data(){
         return {
+            showVideoPlayer: false,
             videoOptions: {
                 autoplay: true,
                 controls: true,
                 sources: [
-                    {
-                        src:'https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4'
-                    }
+
                 ]
             }
         }
+    },
+    mounted(){
+        this.videoOptions.sources.push({
+            src : this.recording.link
+        })
+        this.showVideoPlayer = true
     }
 }
 </script>
