@@ -28,6 +28,7 @@ export default {
         this.videoOptions.sources.push({
             src : this.recording.link
         })
+        console.log(this.videoOptions.sources,'')
         setTimeout(() =>{
             this.showVideoPlayer = true
         },1000)

@@ -55,7 +55,7 @@ class RecordingController extends Controller
 
     public function view($recording_id,Request $request){
         $recording = $this->modelObject->find($recording_id);
-        // return view('recording.view',['recording' => $recording]);
+        return view('recording.view',['recording' => $recording]);
 
         return Inertia::render('Recording/See', [
             'recording' => $recording
