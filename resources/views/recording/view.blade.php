@@ -6,26 +6,57 @@
   </head>
 
   <body>
-    <video
-      id="my-video"
-      class="video-js"
-      controls
-      preload="auto"
-      width="640"
-      height="264"
-      poster="MY_VIDEO_POSTER.jpg"
-      data-setup="{}"
-    >
+    <iframe
+        onload="onLoadContent(this)"
+        class="content sleek-player"
+        id="player_iframe"
+        src="//play.webvideocore.net/html5.html"
+        allowfullscreen="true"
+        allowtransparency="true"
+        frameborder="0">
+    </iframe>
 
-      <source src="{{$recording->link}}" type="video/mp4" />
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a
-        web browser that
-        <a href="https://videojs.com/html5-video-support/" target="_blank"
-          >supports HTML5 video</a
-        >
-      </p>
-    </video>
+    <script>
+        var playerIframe = document.getElementById('player_iframe');
 
-    <script src="https://vjs.zencdn.net/8.16.1/video.min.js"></script>
+
+
+
+        function playerInit() {
+            sendMessage('init', {
+                customUrl: @json($recording->link),
+                colorBase: '#250864',
+                colorText: '#ffffff',
+                colorHover: '#7f54f8',
+                threeColorsMode: true,
+                playButton: true,
+                playButtonStyle: 'pulsing'
+            });
+        }
+
+        function onMessage(event) {
+            if(event.source !== playerIframe.contentWindow) {
+                return;
+            }
+
+            var key = event.message ? 'message' : 'data';
+            var details = event[key];
+            var message = details.message;
+
+            if(message === 'init') {
+                playerInit();
+            }
+        }
+
+        function sendMessage(message, data) {
+            playerIframe.contentWindow.postMessage({
+                message: message,
+                data: data
+            }, '*');
+        }
+
+        playerInit();
+
+        window.addEventListener('message', onMessage, false);
+    </script>
   </body>
